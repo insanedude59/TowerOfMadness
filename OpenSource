@@ -11,6 +11,17 @@ local tab1 = window:AddTab("Main")
 
 local folder1 = tab1:AddFolder("Auto")
 
+
+
+
+local towers = {}
+for i,v in pairs(game:GetService("Workspace").Tower.Stages:GetChildren()) do
+    table.insert(towers,v)
+end
+
+
+
+
 folder1:AddButton("Trigger Win Part",function()
     local old = game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.Position
    game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position) 
@@ -45,5 +56,27 @@ folder1:AddSwitch("Auto Trigger Win Part",function(value)
    game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position) 
    wait(0.5)
    game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.CFrame = CFrame.new(old)
+    end
+end)
+
+
+
+local drop = tab1:AddDropdown("Select Stage",function(value)
+    selected = value
+end)
+
+for i = 1,#towers do
+    drop:Add(towers[i])
+end
+
+
+local root = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+tab1:AddButton("Tp to Selected Stage",function()
+    if root then
+        for i,v in pairs(game:GetService("Workspace").Tower.Stages[tostring(selected)]:GetChildren()) do
+            if v.Size == Vector3.new(20,1,8) then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0,2,0)
+            end
+        end
     end
 end)
