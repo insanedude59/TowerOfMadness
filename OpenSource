@@ -1,0 +1,49 @@
+local library = loadstring(game:HttpGet("http://cindering.xyz/message.txt"))()
+
+local window = library:AddWindow("Tower of Madness",{
+main_color = Color3.fromRGB(41, 74, 122),
+		min_size = Vector2.new(500, 500),
+		toggle_key = Enum.KeyCode.RightShift,
+		can_resize = true,
+	})
+	
+local tab1 = window:AddTab("Main")
+
+local folder1 = tab1:AddFolder("Auto")
+
+folder1:AddButton("Trigger Win Part",function()
+    local old = game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.Position
+   game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position) 
+   wait(0.5)
+   game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.CFrame = CFrame.new(old)
+end)
+
+
+folder1:AddButton("GodMode",function()
+    for i,v in pairs(workspace.Tower:GetDescendants()) do
+    if v:IsA("TouchTransmitter") and v.Parent.Material == Enum.Material.Neon then
+        v:Destroy()
+        end
+    end
+end)
+
+
+folder1:AddButton("Delete all Kill Parts (GodMode, but better)",function()
+    for i,v in pairs(workspace.Tower:GetDescendants()) do
+    if v:IsA("TouchTransmitter") and v.Parent.Material == Enum.Material.Neon then
+        v.Parent:Destroy()
+        end
+    end
+end)
+
+
+folder1:AddSwitch("Auto Trigger Win Part",function(value)
+    tog = value
+    local old = game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.Position
+    
+    while tog do wait()
+   game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position) 
+   wait(0.5)
+   game:GetService("Workspace").Tower.Winners.WinnersCheckpoint.CFrame = CFrame.new(old)
+    end
+end)
